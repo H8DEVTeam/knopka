@@ -23,9 +23,9 @@ namespace knopka
 
         private void insertData()
         {
-            string conStr = "server=@textBox2;user=hipsters_guru;" +
-                             "database=hipsters_guru;password=hipsters_guru;";
-          
+            string conStr = "server=" + textBox2.Text + ";user=hipsters_guru;" +
+"database=hipsters_guru;password=hipsters_guru;";
+
             using (MySqlConnection con = new MySqlConnection(conStr))
             {
                 try
@@ -60,6 +60,11 @@ namespace knopka
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
         {
 
         }
