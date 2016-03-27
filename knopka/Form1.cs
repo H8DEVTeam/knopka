@@ -12,8 +12,10 @@ using System.Data.SqlClient;
 
 namespace knopka
 {
+
     public partial class Form1 : Form
     {
+        
         public Form1()
         {
             InitializeComponent();
@@ -21,23 +23,29 @@ namespace knopka
 
         private void insertData()
         {
-            string conStr = "server=hipsters.mysql.ukraine.com.ua;user=hipsters_guru;" +
+            string conStr = "server=@textBox2;user=hipsters_guru;" +
                              "database=hipsters_guru;password=hipsters_guru;";
-
+          
             using (MySqlConnection con = new MySqlConnection(conStr))
             {
                 try
                 {
                     string sql = "INSERT INTO friendf (name, lastname, age)" +
-                                 "VALUES ('Misha', 'Ivanov', 26)";
-
-                    MySqlCommand cmd = new MySqlCommand(sql, con);
+                                 "VALUES (@Name, @LastName, @Age);";
 
                     con.Open();
 
-                    cmd.ExecuteNonQuery();
+                    MySqlCommand cmd = new MySqlCommand(sql, con);
 
+                    //создаем параметры и добавляем их в коллекцию
+                    
+                    cmd.Parameters.AddWithValue("@Name", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@LastName", richTextBox1.Text);
+                    cmd.Parameters.AddWithValue("@Age", 18);
+
+                    cmd.ExecuteNonQuery();
                     MessageBox.Show("Данные добавлены!");
+
                 }
 
                 catch (Exception ex)
@@ -49,6 +57,11 @@ namespace knopka
         private void button1_Click(object sender, EventArgs e)
         {
             insertData();
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
