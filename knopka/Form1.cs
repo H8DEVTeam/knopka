@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace knopka
 {
@@ -23,8 +24,8 @@ namespace knopka
 
         private void insertData()
         {
-            string conStr = "server=" + textBox2.Text + ";user=hipsters_guru;" +
-"database=hipsters_guru;password=hipsters_guru;";
+            string conStr = "server=" + textBox2.Text + ";user=" + textBox3.Text +
+";database=" + textBox5.Text + ";password =" + textBox4.Text;
 
             using (MySqlConnection con = new MySqlConnection(conStr))
             {
@@ -65,6 +66,11 @@ namespace knopka
         }
 
         private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
         {
 
         }
