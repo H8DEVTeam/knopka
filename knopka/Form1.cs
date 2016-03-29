@@ -31,8 +31,9 @@ namespace knopka
             {
                 try
                 {
-                    string sql = "INSERT INTO friendf (name, lastname, age)" +
-                                 "VALUES (@Name, @LastName, @Age);";
+                    string sql = "INSERT INTO wp_posts (ID, post_author, post_date, post_date_gmt, post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_content_filtered, post_parent, guid, menu_order, post_type, post_mime_type, comment_count)" +
+                                 "VALUES ('', 1,'','', @Content, @Title,'', 'publish', 'open', 'open','', @Postname,'','','','','','','','','','','');";
+                    //(777, 1, '2016-03-26 00:39:53', '2016-03-26 00:39:53', 'SHIT SHIT SHIT', 'SHIT TESTING', '', 'publish', 'open', 'open', '', 'shit-test', '', '', '2016-03-26 00:39:53', '2016-03-26 00:39:53', '', 0, 'http://pdfdata.org/?p=777', 0, 'post', '', 0);
 
                     con.Open();
 
@@ -40,9 +41,10 @@ namespace knopka
 
                     //создаем параметры и добавляем их в коллекцию
                     
-                    cmd.Parameters.AddWithValue("@Name", textBox1.Text);
-                    cmd.Parameters.AddWithValue("@LastName", richTextBox1.Text);
-                    cmd.Parameters.AddWithValue("@Age", 18);
+                    cmd.Parameters.AddWithValue("@Title", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@Content", richTextBox1.Text);
+                    cmd.Parameters.AddWithValue("@Postname", textBox6.Text);
+                    // cmd.Parameters.AddWithValue("@Age", 18);
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Данные добавлены!");
@@ -71,6 +73,21 @@ namespace knopka
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
