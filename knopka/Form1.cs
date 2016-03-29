@@ -31,8 +31,8 @@ namespace knopka
             {
                 try
                 {
-                    string sql = "INSERT INTO wp_posts (ID, post_author, post_date, post_date_gmt, post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_content_filtered, post_parent, guid, menu_order, post_type, post_mime_type, comment_count)" +
-                                 "VALUES ('', 1,'','', @Content, @Title,'', 'publish', 'open', 'open','', @Postname,'','','','','','','','','','','');";
+                    string sql = "INSERT INTO wp_posts (post_author, post_date, post_date_gmt, post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_content_filtered, post_parent, guid, menu_order, post_type, post_mime_type, comment_count)" +
+                                 "VALUES (1,@date,@date, @Content, @Title,'', 'publish', 'open', 'open','', @Postname,'','',@date,@date,'','0','','0','post','','');";
                     //(777, 1, '2016-03-26 00:39:53', '2016-03-26 00:39:53', 'SHIT SHIT SHIT', 'SHIT TESTING', '', 'publish', 'open', 'open', '', 'shit-test', '', '', '2016-03-26 00:39:53', '2016-03-26 00:39:53', '', 0, 'http://pdfdata.org/?p=777', 0, 'post', '', 0);
 
                     con.Open();
@@ -45,6 +45,9 @@ namespace knopka
                     cmd.Parameters.AddWithValue("@Content", richTextBox1.Text);
                     cmd.Parameters.AddWithValue("@Postname", textBox6.Text);
                     // cmd.Parameters.AddWithValue("@Age", 18);
+                    string dateTime2 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    cmd.Parameters.AddWithValue("@date", dateTime2);
+
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Данные добавлены!");
