@@ -370,6 +370,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(183, 22);
             this.textBox7.TabIndex = 26;
+            this.textBox7.Text = "111";
             // 
             // button9
             // 
