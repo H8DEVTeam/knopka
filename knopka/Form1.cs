@@ -24,8 +24,8 @@ namespace knopka
 
         private void insertData()
         {
-            string conStr = "server=" + textBox2.Text + ";user=" + textBox3.Text +
-";database=" + textBox5.Text + ";password =" + textBox4.Text;
+            string conStr = "server=" + textBox1.Text + ";user=" + textBox3.Text +
+";database=" + textBox2.Text + ";password =" + textBox4.Text;
 
             using (MySqlConnection con = new MySqlConnection(conStr))
             {
@@ -41,7 +41,7 @@ namespace knopka
 
                     //создаем параметры и добавляем их в коллекцию
                     
-                    cmd.Parameters.AddWithValue("@Title", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@Title", textBox5.Text);
                     cmd.Parameters.AddWithValue("@Content", richTextBox1.Text);
                     cmd.Parameters.AddWithValue("@Postname", textBox6.Text);
                     // cmd.Parameters.AddWithValue("@Age", 18);
@@ -96,6 +96,21 @@ namespace knopka
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
         {
 
         }
