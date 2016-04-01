@@ -10,17 +10,23 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
 using System.IO;
+using System.Globalization;
+
+
 
 namespace knopka
 {
 
     public partial class Form1 : Form
-    {
-        
+   
+ {
+  
         public Form1()
         {
             InitializeComponent();
         }
+       
+
 
         private void insertData()
         {
@@ -60,6 +66,24 @@ namespace knopka
                 }
             }
         }
+        private void getDataTags()
+        {
+            string conStr = "server=" + textBox1.Text + ";user=" + textBox3.Text +
+";database=" + textBox2.Text + ";password =" + textBox4.Text;
+
+            using (MySqlConnection con = new MySqlConnection(conStr))
+            {
+                try
+                {
+                    var cmd = new MySqlCommand("SELECT slug FROM wp_terms WHERE term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy = 'post_tag')", conn);
+                    SqlDataAdapter sda = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
+                    sda.SelectCommand = cmd;
+                    sda.Fill(ds);
+
+
+                }
+        } }
         private void button1_Click(object sender, EventArgs e)
         {
             insertData();
@@ -118,6 +142,37 @@ namespace knopka
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+       
+        private void button14_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            getDataTags();
         }
     }
 }
