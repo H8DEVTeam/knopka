@@ -66,24 +66,86 @@ namespace knopka
                 }
             }
         }
-        private void getDataTags()
+        private DataTable GetComments()
         {
-            string conStr = "server=" + textBox1.Text + ";user=" + textBox3.Text +
-";database=" + textBox2.Text + ";password =" + textBox4.Text;
+            DataTable dt = new DataTable();
 
-            using (MySqlConnection con = new MySqlConnection(conStr))
+            MySqlConnectionStringBuilder mysqlCSB;
+            mysqlCSB = new MySqlConnectionStringBuilder();
+            mysqlCSB.Server = textBox1.Text;
+            mysqlCSB.Database = textBox2.Text;
+            mysqlCSB.UserID = textBox3.Text;
+            mysqlCSB.Password = textBox4.Text;
+
+            string queryString = @"SELECT slug FROM wp_terms WHERE term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy='post_tag')";
+
+            using (MySqlConnection con = new MySqlConnection())
             {
+                con.ConnectionString = mysqlCSB.ConnectionString;
+
+                MySqlCommand com = new MySqlCommand(queryString, con);
+
                 try
                 {
-                    var cmd = new MySqlCommand("SELECT slug FROM wp_terms WHERE term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy = 'post_tag')", conn);
-                    SqlDataAdapter sda = new SqlDataAdapter();
-                    DataSet ds = new DataSet();
-                    sda.SelectCommand = cmd;
-                    sda.Fill(ds);
+                    con.Open();
 
-
+                    using (MySqlDataReader dr = com.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            dt.Load(dr);
+                        }
+                    }
                 }
-        } }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            return dt;
+        }
+
+        private DataTable GetCats()
+        {
+            DataTable dt = new DataTable();
+
+            MySqlConnectionStringBuilder mysqlCSB;
+            mysqlCSB = new MySqlConnectionStringBuilder();
+            mysqlCSB.Server = textBox1.Text;
+            mysqlCSB.Database = textBox2.Text;
+            mysqlCSB.UserID = textBox3.Text;
+            mysqlCSB.Password = textBox4.Text;
+
+            string queryString = @"SELECT slug FROM wp_terms WHERE term_id IN (SELECT term_id FROM wp_term_taxonomy WHERE taxonomy='category')";
+
+            using (MySqlConnection con = new MySqlConnection())
+            {
+                con.ConnectionString = mysqlCSB.ConnectionString;
+
+                MySqlCommand com = new MySqlCommand(queryString, con);
+
+                try
+                {
+                    con.Open();
+
+                    using (MySqlDataReader dr = com.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            dt.Load(dr);
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            return dt;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             insertData();
@@ -172,7 +234,12 @@ namespace knopka
 
         private void button15_Click(object sender, EventArgs e)
         {
-            getDataTags();
+            dataGridView1.DataSource = GetComments();
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            dataGridView2.DataSource = GetCats();
         }
     }
 }
