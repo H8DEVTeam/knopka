@@ -25,13 +25,15 @@ namespace knopka
         {
             InitializeComponent();
         }
-       
+
 
 
         private void insertData()
         {
             string conStr = "server=" + textBox1.Text + ";user=" + textBox3.Text +
 ";database=" + textBox2.Text + ";password =" + textBox4.Text;
+            string fileVar1 = File.ReadLines("1.txt").Skip(0).First();
+            string fileVar2 = File.ReadLines("1.txt").Skip(1).First();
 
             using (MySqlConnection con = new MySqlConnection(conStr))
             {
@@ -53,6 +55,7 @@ namespace knopka
                     // cmd.Parameters.AddWithValue("@Age", 18);
                     string dateTime2 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     cmd.Parameters.AddWithValue("@date", dateTime2);
+
 
 
                     cmd.ExecuteNonQuery();
@@ -146,6 +149,45 @@ namespace knopka
             return dt;
         }
 
+        private DataTable GetPosts()
+        {
+            DataTable dt = new DataTable();
+
+            MySqlConnectionStringBuilder mysqlCSB;
+            mysqlCSB = new MySqlConnectionStringBuilder();
+            mysqlCSB.Server = textBox1.Text;
+            mysqlCSB.Database = textBox2.Text;
+            mysqlCSB.UserID = textBox3.Text;
+            mysqlCSB.Password = textBox4.Text;
+
+            string queryString = @"SELECT post_title, post_name FROM wp_posts WHERE post_type='post'";
+
+            using (MySqlConnection con = new MySqlConnection())
+            {
+                con.ConnectionString = mysqlCSB.ConnectionString;
+
+                MySqlCommand com = new MySqlCommand(queryString, con);
+
+                try
+                {
+                    con.Open();
+
+                    using (MySqlDataReader dr = com.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            dt.Load(dr);
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            return dt;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             insertData();
@@ -240,6 +282,26 @@ namespace knopka
         private void button16_Click(object sender, EventArgs e)
         {
             dataGridView2.DataSource = GetCats();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            dataGridView3.DataSource = GetPosts();
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button14_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
